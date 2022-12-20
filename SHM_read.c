@@ -23,23 +23,23 @@ int main(int argc , char *argv[]){
 	struct shmseg *shmp;
 	shmid = shmget(SHM_KEY , sizeof(struct shmseg) , 0644|IPC_CREAT);
 	if(shmid==-1){
-		perror("Shared Memory");
+		perror("Shared Memory error happened");
 		return 1;
 	}
 	shmp =shmat(shmid , NULL , 0);
 	if(shmp==(void*)-1){
-		perror("Shared Memory attach");
+		perror("Shared Memory attach error happened");
 		return 1;
 	}
 	while(shmp->complete!=1){
-		for(int i=0;i<5;i++){
-			for(int j=0;j<12;j++){
-				if(j==0){
-					 printf("%d" , shmp->buffer[i][j]);
+		for(int p=0;p<5;p++){
+			for(int k=0;k<12;k++){
+				if(k==0){
+					 printf("%d" , shmp->buffer[p][k]);
 				}
 				
 				else{
-					 printf("%c" , shmp->buffer[i][j]);
+					 printf("%c" , shmp->buffer[p][k]);
 				}
 			}
 			printf("\n");
