@@ -19,8 +19,8 @@ int main(int agrc , char *argv[]){
 
 	con_soc = socket(AF_UNIX ,SOCK_SEQPACKET , 0 );
 	if(con_soc == -1){
-		perror("Socket couldn't be made");
-		exit(EXIT_FAILURE);
+		perror("Process of making socket is not completed");
+		exit(1);
 	}
 
 	memset(&server, 0 , sizeof(server));
@@ -29,21 +29,21 @@ int main(int agrc , char *argv[]){
 
 	retr = bind(con_soc , (const struct sockaddr *) &server, sizeof(server));
 	if(retr == -1){
-		perror("bind");
-		exit(EXIT_FAILURE);
+		perror("Error is caused in bind function");
+		exit(1);
 	}
 
 	retr = listen(con_soc,100);
 	if(retr ==-1){
-		perror("listen");
-		exit(EXIT_FAILURE);
+		perror("Error is caused in listening function");
+		exit(1);
 	}
 
 	while(1){
 		data = accept(con_soc , NULL , NULL);
 		if(data ==-1){
-			perror("couldn't accept");
-			exit(EXIT_FAILURE);
+			perror("cannot accept");
+			exit(1);
 		}
 
 		idx=0;
@@ -51,8 +51,8 @@ int main(int agrc , char *argv[]){
 	 	while(1){
 			retr = read(data , buffer , sizeof(buffer));
 			if(retr==-1){
-				perror("couldn't read");
-				exit(EXIT_FAILURE);
+				perror("cannot do reading");
+				exit(1);
 			}
 
 			buffer[sizeof(buffer)-1]=0;
@@ -87,8 +87,8 @@ int main(int agrc , char *argv[]){
 			break;
 		}
 		if(retr ==-1){
-			perror("write");
-			exit(EXIT_FAILURE);
+			perror("Write cannot be performed");
+			exit(1);
 		}
 
 	}
